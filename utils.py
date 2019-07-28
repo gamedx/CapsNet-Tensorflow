@@ -9,33 +9,40 @@ def load_mnist(batch_size, is_training=True):
     if is_training:
         fd = open(os.path.join(path, 'train-images-idx3-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trainX = loaded[16:].reshape((15600, 160, 160, 1)).astype(np.float32) # changed 60000 to 15600 & changed 28 to 160
+        trainX = loaded[16:].reshape((9100, 160, 160, 1)).astype(np.float32)
 
         fd = open(os.path.join(path, 'train-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trainY = loaded[8:].reshape((15600)).astype(np.int32) # changed 55000 to 15600
+        trainY = loaded[8:].reshape((9100)).astype(np.int32)
 
-        trX = trainX[:14400] / 255. # changed 55000 to 14400
-        trY = trainY[:14400]        # changed 55000 to 14400
+        trX = trainX[:7700] / 255.
+        trY = trainY[:7700]
 
-        valX = trainX[14400:, ] / 255.  # changed 55000 to 14400
-        valY = trainY[14400:]  		# changed 55000 to 14400
+        valX = trainX[7700:, ] / 255.
+        valY = trainY[7700:]
 
-        num_tr_batch = 14400 // batch_size  # changed 55000 to 14400
-        num_val_batch = 1200 // batch_size  # changed 5000 to 1200
+        num_tr_batch = 7700 // batch_size
+        num_val_batch = 1400 // batch_size
 
         return trX, trY, num_tr_batch, valX, valY, num_val_batch
     else:
         fd = open(os.path.join(path, 't10k-images-idx3-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        teX = loaded[16:].reshape((2400, 160, 160, 1)).astype(np.float) # changed 10000 to 2400
+        teX = loaded[16:].reshape((1400, 160, 160, 1)).astype(np.float)
 
         fd = open(os.path.join(path, 't10k-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        teY = loaded[8:].reshape((2400)).astype(np.int32) # changed 10000 to 2400
+        teY = loaded[8:].reshape((1400)).astype(np.int32)
 
-        num_te_batch = 2400 // batch_size  # changed 10000 to 2400
+        num_te_batch = 1400 // batch_size
         return teX / 255., teY, num_te_batch
+
+
+def load_data(dataset, batch_size, is_training=True, one_hot=False):
+    if dataset == 'mnist':
+        return load_mnist(batch_size, is_training)
+    else:
+        raise Exception('Invalid dataset, please check the name of dataset:', dataset)
 
 
 def get_batch_data(dataset, batch_size, num_threads):

@@ -43,9 +43,9 @@ flags.DEFINE_string('results', 'results', 'path for saving results')
 ############################
 #   distributed setting    #
 ############################
-flags.DEFINE_integer('num_gpu', 1, 'number of gpus for distributed training')
-flags.DEFINE_integer('batch_size_per_gpu', 4, 'batch size on 1 gpu')
-flags.DEFINE_integer('thread_per_gpu', 2, 'Number of preprocessing threads per tower.')
+# flags.DEFINE_integer('num_gpu', 1, 'number of gpus for distributed training')
+# flags.DEFINE_integer('batch_size_per_gpu', 4, 'batch size on 1 gpu')
+# flags.DEFINE_integer('thread_per_gpu', 2, 'Number of preprocessing threads per tower.')
 
 cfg = tf.app.flags.FLAGS
 # tf.logging.set_verbosity(tf.logging.INFO)

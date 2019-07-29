@@ -2,3 +2,6 @@
 data*
 .ropeproject
 logdir*
+results/loss.csv
+results/train_acc.csv
+results/val_acc.csv

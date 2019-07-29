@@ -1,7 +1,8 @@
 """
-License: Apache-2.0
-Author: Huadong Liao
-E-mail: naturomics.liao@gmail.com
+License: Apache-2.0 
+Code by Oliver Aurelius Ellison and Michael Edward Cruz of Boston University (2019) 
+Adapted from code by Huadong Liao of Stanford University (2017)
+E-mail: aurelius@bu.edu, mecruz@bu.edu
 """
 
 import tensorflow as tf
@@ -43,7 +44,7 @@ class CapsNet(object):
 
                 # t_vars = tf.trainable_variables()
                 self.global_step = tf.Variable(0, name='global_step', trainable=False)
-                self.optimizer = tf.train.AdafactorOptimizer()
+                self.optimizer = tf.compat.v1.train.RMSPropOptimizer()
                 self.train_op = self.optimizer.minimize(self.total_loss, global_step=self.global_step)
             else:
                 self.X = tf.placeholder(tf.float32, shape=(cfg.batch_size, self.height, self.width, self.channels))

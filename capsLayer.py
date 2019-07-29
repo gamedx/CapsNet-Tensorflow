@@ -1,8 +1,10 @@
 """
-License: Apache-2.0
-Author: Huadong Liao
-E-mail: naturomics.liao@gmail.com
+License: Apache-2.0 
+Code by Oliver Aurelius Ellison and Michael Edward Cruz of Boston University (2019) 
+Adapted from code by Huadong Liao of Stanford University (2017)
+E-mail: aurelius@bu.edu, mecruz@bu.edu
 """
+
 
 import numpy as np
 import tensorflow as tf

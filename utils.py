@@ -17,32 +17,32 @@ def load_mnist(batch_size, is_training=True):
     if is_training:
         fd = open(os.path.join(path, 'train-images-idx3-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trainX = loaded[16:].reshape((9100, 120, 120, 1)).astype(np.float32)
+        trainX = loaded[16:].reshape((4200, 120, 120, 1)).astype(np.float32)
 
         fd = open(os.path.join(path, 'train-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trainY = loaded[8:].reshape((9100)).astype(np.int32)
+        trainY = loaded[8:].reshape((4200)).astype(np.int32)
 
-        trX = trainX[:7700] / 255.
-        trY = trainY[:7700]
+        trX = trainX[:3900] / 255.
+        trY = trainY[:3900]
 
-        valX = trainX[7700:, ] / 255.
-        valY = trainY[7700:]
+        valX = trainX[3900:, ] / 255.
+        valY = trainY[3900:]
 
-        num_tr_batch = 7700 // batch_size
-        num_val_batch = 1400 // batch_size
+        num_tr_batch = 3900 // batch_size
+        num_val_batch = 300 // batch_size
 
         return trX, trY, num_tr_batch, valX, valY, num_val_batch
     else:
         fd = open(os.path.join(path, 't10k-images-idx3-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        teX = loaded[16:].reshape((1400, 120, 120, 1)).astype(np.float)
+        teX = loaded[16:].reshape((300, 120, 120, 1)).astype(np.float32)
 
         fd = open(os.path.join(path, 't10k-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        teY = loaded[8:].reshape((1400)).astype(np.int32)
+        teY = loaded[8:].reshape((300)).astype(np.int32)
 
-        num_te_batch = 1400 // batch_size
+        num_te_batch = 300 // batch_size
         return teX / 255., teY, num_te_batch
 
 
@@ -56,8 +56,7 @@ def load_data(dataset, batch_size, is_training=True, one_hot=False):
 def get_batch_data(dataset, batch_size, num_threads):
     if dataset == 'mnist':
         trX, trY, num_tr_batch, valX, valY, num_val_batch = load_mnist(batch_size, is_training=True)
-    elif dataset == 'fashion-mnist':
-        trX, trY, num_tr_batch, valX, valY, num_val_batch = load_fashion_mnist(batch_size, is_training=True)
+
     data_queues = tf.train.slice_input_producer([trX, trY])
     X, Y = tf.train.shuffle_batch(data_queues, num_threads=num_threads,
                                   batch_size=batch_size,
